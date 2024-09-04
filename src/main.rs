@@ -1,8 +1,15 @@
 use std::fs::File;
-use std::io::prelude::*;
+use std::io::{self, Write};
 
-fn main() -> std::io::Result<()> {
+fn main() -> io::Result<()> {
     let mut file = File::create("task.md")?;
-    file.write_all(b"# Hello,world")?;
+
+    let mut input = String::new();
+    println!("Please enter task text:");
+    io::stdin().read_line(&mut input)?;
+
+    let task = input.trim();
+    writeln!(file, "- {}", task)?;
+
     Ok(())
 }
